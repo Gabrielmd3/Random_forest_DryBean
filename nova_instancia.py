@@ -1,6 +1,6 @@
 import pandas as pd
 from sklearn import preprocessing
-import pickle
+from pickle import load
 from imblearn.over_sampling import SMOTE
 from sklearn.model_selection import GridSearchCV
 from pprint import pprint
@@ -20,12 +20,11 @@ def nova_instancia(dados, colunas):
     dados_classes_nova_instancia = dados['Class']
     # exit()
 
-    pickle_in = open('dados/modelo_normalizador.pkl', 'rb')
-    modelo_normalizador_treinado = pickle.load(pickle_in)
+    modelo_normalizador_treinado = load(open('dados/modelo_normalizador.pkl', 'rb'))
     dados_numericos_normalizados_nova_instancia = modelo_normalizador_treinado.transform(dados_numericos_nova_instancia)
     dados_numericos_normalizados_nova_instancia = pd.DataFrame(data = dados_numericos_normalizados_nova_instancia, columns = colunas_)
     print(dados_numericos_normalizados_nova_instancia)
     print(dados_classes_nova_instancia)
-    modelo_treinado = open('dados/modelo_treinado.pkl', 'rb')
+    modelo_treinado = load(open('dados/modelo_treinado.pkl', 'rb'))
     print(modelo_treinado.predict(dados_numericos_normalizados_nova_instancia))
     print(modelo_treinado.predict_proba(dados_numericos_normalizados_nova_instancia))

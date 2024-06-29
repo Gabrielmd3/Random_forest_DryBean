@@ -14,5 +14,4 @@ dados_numericos_normalizados, dados_classes, colunas = classificador.normalizaca
 # print("Classes depois do balanceamento: ", classes_count)
 
 floresta = classificador.random_forest(dados_numericos_normalizados, dados_classes)
-classificador.cross_validation(floresta)
-# nova_instancia.nova_instancia(dados=dados, colunas=colunas)
+nova_instancia.nova_instancia(dados=dados, colunas=colunas)

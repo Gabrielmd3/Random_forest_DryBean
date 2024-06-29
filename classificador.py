@@ -31,7 +31,6 @@ def normalizacao(dados, colunas):
 
 
 def random_forest(dados_numericos_normalizados, dados_classes):
-    print(dados_numericos_normalizados)
     dados_classes = dados_classes.sample(651)
     dados_numericos_normalizados = dados_numericos_normalizados.sample(651)
     n_estimators = [int(x) for x in np.linspace(start = 10, stop = 300, num = 3)]
@@ -58,14 +57,10 @@ def random_forest(dados_numericos_normalizados, dados_classes):
     floresta = RandomForestClassifier(bootstrap = rf_grid.best_params_['bootstrap'], max_depth = rf_grid.best_params_['max_depth'], max_features= rf_grid.best_params_['max_features'], min_samples_leaf= rf_grid.best_params_['min_samples_leaf'], min_samples_split= rf_grid.best_params_['min_samples_split'], n_estimators = rf_grid.best_params_['n_estimators'])
     floresta.fit(dados_numericos_normalizados, dados_classes)
     dump(floresta, open('dados/modelo_treinado.pkl', 'wb'))
-    return floresta
-
-def cross_validation(floresta, dados_numericos_normalizados, dados_classes):
     scoring = ['precision_macro', 'recall_macro']
     scores_cross = cross_validate(floresta, dados_numericos_normalizados, dados_classes.values.ravel(), scoring=scoring)
     print(scores_cross['test_precision_macro'].mean())
     print(scores_cross['test_recall_macro'].mean())
-
     x_ = np.array(["test_precision_macro", "test_recall_macro"])
     y_ = np.array([scores_cross['test_precision_macro'].mean(), scores_cross['test_recall_macro'].mean()])
     print(x_)
